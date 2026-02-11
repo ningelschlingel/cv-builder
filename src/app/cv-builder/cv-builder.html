@@ -1,0 +1,65 @@
+<div class="min-h-screen bg-zinc-900 text-zinc-100 transition-colors duration-300">
+
+    <div class="pt-24 pb-20 flex flex-col items-center gap-12 print:p-0">
+        @for (page of pages(); track page.id; let i = $index) {
+        <div class="page-container relative">
+
+            <div
+                class="a4-page bg-white text-black shadow-[0_0_50px_rgba(0,0,0,0.3)] overflow-hidden print:shadow-none">
+                <div
+                    class="a4-page bg-white text-black shadow-[0_0_50px_rgba(0,0,0,0.3)] overflow-hidden print:shadow-none">
+                    <div class="w-full h-full">
+                        <app-cv-page [isEditMode]="isEditMode()" [accentColor]="accentColor()">
+                        </app-cv-page>
+                    </div>
+                </div>
+            </div>
+
+            <div class="absolute -right-20 top-0 font-bold text-2xl">Page {{ i + 1 }}</div>
+
+            @if (pages().length > 1 && isEditMode()) {
+            <button (click)="removePage(page.id)" class="absolute -right-12 top-0 flex items-center justify-center p-2 
+                 bg-red-500/10 backdrop-blur-md 
+                 border border-white/10 rounded-xl 
+                 text-red-400 hover:bg-red-500/20 hover:border-red-500/40 
+                 transition-all duration-300 shadow-xl print:hidden group/del">
+
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
+                    stroke="currentColor" class="w-5 h-5 transition-transform group-hover/del:scale-110">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                </svg>
+            </button>
+            }
+        </div>
+        }
+    </div>
+
+        <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-6 px-6 py-3 
+              bg-zinc-800/60 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl print:hidden">
+
+        <div class="flex items-center gap-3 pr-4 border-r border-white/10">
+            <div class="relative w-8 h-8 rounded-full overflow-hidden border border-white/20"
+                [style.backgroundColor]="accentColor()">
+                <input type="color" (input)="accentColor.set($any($event.target).value)"
+                    class="absolute inset-0 opacity-0 cursor-pointer scale-150">
+            </div>
+            <span class="text-xs font-medium uppercase tracking-wider text-zinc-400">Theme</span>
+        </div>
+
+        <button (click)="isEditMode.set(!isEditMode())"
+            class="px-4 py-1.5 rounded-lg text-sm font-semibold transition-all"
+            [ngClass]="isEditMode() ? 'bg-white text-black' : 'bg-zinc-700 text-white'">
+            {{ isEditMode() ? 'Editing' : 'Preview' }}
+        </button>
+
+        <button (click)="addPage()" class="p-2 hover:bg-white/10 rounded-lg transition-colors">
+            <span class="text-sm font-medium">+ Add Page</span>
+        </button>
+
+        <button (click)="downloadPdf()"
+            class="ml-4 px-5 py-2 bg-blue-600 hover:bg-blue-500 rounded-xl text-sm font-bold shadow-lg shadow-blue-500/20 transition-all">
+            Download PDF
+        </button>
+    </nav>
+</div>

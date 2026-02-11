@@ -1,0 +1,50 @@
+:host {
+  /* Using your variables as requested */
+  --a4-width: 210mm;
+  --a4-height: 297mm;
+}
+
+.a4-page {
+  width: var(--a4-width);
+  height: var(--a4-height);
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+/* Print Overrides */
+@media print {
+  /* Hides headers/footers (URL, Date, Page Title) */
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  body {
+    background: white;
+    margin: 0;
+  }
+
+  .min-h-screen {
+    background: white !important;
+    padding: 0 !important;
+  }
+
+  .pt-32 {
+    padding-top: 0 !important;
+  }
+
+  /* Each page container forces a break */
+  .page-container {
+    page-break-after: always;
+    page-break-inside: avoid;
+  }
+}
+
+/* Custom Scrollbar for modern look */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.1);
+  border-radius: 10px;
+}
